@@ -9,18 +9,15 @@ import {
 } from '@material-ui/core';
 
 import React from 'react';
-
-export type Row = {
-  name: string;
-  region: string;
-  distance: number;
-};
+import { Row } from './CloudList';
 
 type TableProps = {
-  rows: Row[];
+  data: Row[];
+  isLoading: boolean;
+  error?: string | null;
 };
 
-export const CloudTable = ({ rows }: TableProps) => {
+export const CloudTable = ({ data, isLoading, error }: TableProps) => {
   return (
     <TableContainer component={Paper}>
       <Table aria-label="simple table">
@@ -32,13 +29,23 @@ export const CloudTable = ({ rows }: TableProps) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <TableRow key={row.name}>
-              <TableCell>{row.name}</TableCell>
-              <TableCell>{row.region}</TableCell>
-              <TableCell>{row.distance}</TableCell>
+          {isLoading ? (
+            <TableRow>
+              <TableCell>Loading...</TableCell>
             </TableRow>
-          ))}
+          ) : error ? (
+            <TableRow>
+              <TableCell>Unable to load data</TableCell>
+            </TableRow>
+          ) : (
+            data.map((row) => (
+              <TableRow key={row.name}>
+                <TableCell>{row.name}</TableCell>
+                <TableCell>{row.region}</TableCell>
+                <TableCell>{row.distance}</TableCell>
+              </TableRow>
+            ))
+          )}
         </TableBody>
       </Table>
     </TableContainer>

@@ -7,3 +7,7 @@ Distance is calculated based on user's geolocation browser header.
 React with Typescript FE.
 Python BE using Flask.
 
+
+## Attributions
+
+https://www.smashingmagazine.com/2020/06/rest-api-react-fetch-axios/

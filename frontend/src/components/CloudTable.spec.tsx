@@ -40,7 +40,7 @@ describe('Cloud Table', () => {
     screen.getByText('Loading...');
   });
 
-  it.only('hides loading message when not loading', () => {
+  it('hides loading message when not loading', () => {
     render(<CloudTable data={[]} isLoading={false} />);
 
     expect(screen.queryByText('Loading...')).not.toBeInTheDocument();

@@ -7,7 +7,7 @@ function App() {
   return (
     <div className="App">
       <h1>Aiven Clouds</h1>
-      <Container maxWidth="sm">
+      <Container maxWidth="md">
         <CloudList />
       </Container>
     </div>

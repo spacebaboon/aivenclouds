@@ -4,6 +4,7 @@ import { CloudTable } from './CloudTable';
 
 export type Row = {
   name: string;
+  description: string;
   region: string;
   distance: number;
 };
@@ -20,7 +21,7 @@ export const CloudList = () => {
   useEffect(() => {
     setLoading(true);
     // todo: move this into config file
-    const apiUrl = `http://localhost:5000/clouds`;
+    const apiUrl = `http://localhost:5000/cloudlist`;
     axios
       .get(apiUrl)
       .then((response) => {

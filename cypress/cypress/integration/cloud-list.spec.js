@@ -12,4 +12,10 @@ describe("Aiven cloud listing page", () => {
     cy.findByText("Region");
     cy.findByText("Distance ");
   });
+
+  it("sorts by clicking column headers");
+
+  it("filters by clicking column data and adding tag");
+
+  it("removes filter when closing tag");
 });

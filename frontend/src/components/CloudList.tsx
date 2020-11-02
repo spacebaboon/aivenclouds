@@ -1,27 +1,36 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import { GeolocatedProps } from 'react-geolocated';
 import { CloudTable } from './CloudTable';
 
 export type Row = {
-  name: string;
+  id: string;
   description: string;
   region: string;
   distance: number;
+  provider: string;
 };
 
 export type APIResponse = {
   clouds: Row[];
 };
 
-export const CloudList = () => {
+type CloudListProps = {
+  coords?: GeolocatedProps['coords'];
+};
+
+export const CloudList = (props: CloudListProps) => {
   const [data, setData] = useState<Row[]>([]);
-  const [error, setError] = useState<string | null>();
+  const [error, setError] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
+
+  const urlQuerystring = props.coords
+    ? `?lat=${props.coords.latitude}&lon=${props.coords.longitude}`
+    : '';
+  const apiUrl = `http://localhost:5000/cloudlist${urlQuerystring}`;
 
   useEffect(() => {
     setLoading(true);
-    // todo: move this into config file
-    const apiUrl = `http://localhost:5000/cloudlist`;
     axios
       .get(apiUrl)
       .then((response) => {
@@ -30,9 +39,9 @@ export const CloudList = () => {
       })
       .catch((error) => {
         setLoading(false);
-        setError('Unable to load data');
+        setError(true);
       });
-  }, [setLoading, setError, setData]);
+  }, [setLoading, setError, setData, apiUrl]);
 
   return <CloudTable data={data} isLoading={loading} error={error} />;
 };

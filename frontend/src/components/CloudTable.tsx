@@ -1,64 +1,29 @@
 import { DataGrid, RowsProp } from '@material-ui/data-grid';
 
 import React from 'react';
-import { Row } from './CloudList';
 
 type TableProps = {
   data: RowsProp;
-  // data: Row[];
+
   isLoading: boolean;
-  error?: string | null;
+  error?: boolean;
 };
 
-export const CloudTable = ({ data, isLoading, error }: TableProps) => {
+export const CloudTable = ({ data, isLoading, error = false }: TableProps) => {
   const columns = [
-    { field: 'description', headerName: 'Name', width: 500 },
-    { field: 'region', headerName: 'Region', width: 200 },
+    { field: 'description', headerName: 'Name', width: 400 },
+    { field: 'region', headerName: 'Region', width: 100 },
+    { field: 'provider', headerName: 'Provider', width: 200 },
     { field: 'distance', headerName: 'Distance', type: 'number', width: 150 },
   ];
 
-  return (
+  return isLoading ? (
+    <h2>Loading...</h2>
+  ) : error ? (
+    <h2>Unable to load data</h2>
+  ) : (
     <div style={{ height: 600, width: '100%' }}>
       <DataGrid rows={data} columns={columns} pageSize={50} />
     </div>
   );
-
-  // return (
-  //   <TableContainer component={Paper}>
-  //     <Table stickyHeader aria-label="simple table">
-  //       <TableHead>
-  //         <TableRow>
-  //           <TableCell>
-  //             <TableSortLabel>Name</TableSortLabel>
-  //           </TableCell>
-  //           <TableCell>
-  //             <TableSortLabel>Region</TableSortLabel>
-  //           </TableCell>
-  //           <TableCell>
-  //             <TableSortLabel>Distance</TableSortLabel>
-  //           </TableCell>
-  //         </TableRow>
-  //       </TableHead>
-  //       <TableBody>
-  //         {isLoading ? (
-  //           <TableRow>
-  //             <TableCell>Loading...</TableCell>
-  //           </TableRow>
-  //         ) : error ? (
-  //           <TableRow>
-  //             <TableCell>Unable to load data</TableCell>
-  //           </TableRow>
-  //         ) : (
-  //           data.map((row) => (
-  //             <TableRow key={row.name}>
-  //               <TableCell>{row.description}</TableCell>
-  //               <TableCell>{row.region}</TableCell>
-  //               <TableCell>{row.distance}</TableCell>
-  //             </TableRow>
-  //           ))
-  //         )}
-  //       </TableBody>
-  //     </Table>
-  //   </TableContainer>
-  // );
 };

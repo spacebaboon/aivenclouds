@@ -15,11 +15,11 @@ api_data = {
             "geo_region": "africa",
         },
         {
-            "cloud_description": "Asia, Bahrain - Amazon Web Services: Bahrain",
-            "cloud_name": "aws-me-south-1",
+            "cloud_description": "Asia, Indonesia - Google Cloud: Jakarta",
+            "cloud_name": "google-asia-southeast2",
             "geo_latitude": 26.07,
             "geo_longitude": 50.55,
-            "geo_region": "south asia",
+            "geo_region": "southeast asia",
         },
     ]
 }

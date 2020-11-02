@@ -31,20 +31,6 @@ class TestJsonFormatting(unittest.TestCase):
 
         self.assertEqual(len(responses.calls), 0)
 
-    @responses.activate
-    def test_caches_api_calls(self):
-        responses.add(
-            responses.GET,
-            "https://api.aiven.io/v1/clouds",
-            json=api_data.get("clouds"),
-            status=200,
-        )
-
-        get_cloud_list("production")
-        get_cloud_list("production")
-
-        self.assertEqual(len(responses.calls), 1)
-
 
 if __name__ == "__main__":
     unittest.main()

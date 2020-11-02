@@ -27,6 +27,15 @@ class TestJsonFormatting(unittest.TestCase):
             "Unknown",
         )
 
+    def test_capitalises_region_names(self):
+        processed_data = build_response_data(api_data, (0, 0))
+
+        self.assertEqual(processed_data.get("clouds")[0].get("region"), "Africa")
+        self.assertEqual(processed_data.get("clouds")[1].get("region"), "Africa")
+        self.assertEqual(
+            processed_data.get("clouds")[2].get("region"), "Southeast Asia"
+        )
+
     def test_returns_cloud_json_with_distance(self):
         self.maxDiff = None
 
@@ -37,21 +46,21 @@ class TestJsonFormatting(unittest.TestCase):
                 {
                     "description": "Africa, South Africa - Amazon Web Services: Cape Town",
                     "id": "aws-af-south-1",
-                    "region": "africa",
+                    "region": "Africa",
                     "distance": 7998,
                     "provider": "Amazon Web Services",
                 },
                 {
                     "description": "Africa, South Africa - Azure: South Africa North",
                     "id": "azure-south-africa-north",
-                    "region": "africa",
+                    "region": "Africa",
                     "distance": 7406,
                     "provider": "Azure",
                 },
                 {
                     "description": "Asia, Indonesia - Google Cloud: Jakarta",
                     "id": "google-asia-southeast2",
-                    "region": "southeast asia",
+                    "region": "Southeast Asia",
                     "distance": 4362,
                     "provider": "Google Cloud",
                 },

@@ -25,7 +25,7 @@ def build_response_data(api_data, user_location):
             {
                 "id": result.get("cloud_name"),
                 "description": result.get("cloud_description"),
-                "region": result.get("geo_region"),
+                "region": result.get("geo_region").title(),
                 "distance": distance,
                 "provider": provider,
             }

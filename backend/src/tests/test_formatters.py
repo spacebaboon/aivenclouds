@@ -1,31 +1,9 @@
 import unittest
-from tests. dummy_data import api_data
-from formatters import build_response_data, parse_provider
+from tests.dummy_data import api_data
+from formatters import build_response_data
 
 
 class TestJsonFormatting(unittest.TestCase):
-    def test_parses_provider_from_description(self):
-
-        self.assertEqual(
-            parse_provider("Africa, South Africa - Amazon Web Services: Cape Town"),
-            "Amazon Web Services",
-        )
-
-        self.assertEqual(
-            parse_provider("Africa, South Africa - Azure: South Africa North"),
-            "Azure",
-        )
-
-        self.assertEqual(
-            parse_provider("Asia, Hong Kong - Google Cloud: Hong Kong"),
-            "Google Cloud",
-        )
-
-    def test_returns_unknown_when_provider_not_recognised(self):
-        self.assertEqual(
-            parse_provider("Peru - Inka Cloud: Lima"),
-            "Unknown",
-        )
 
     def test_capitalises_region_names(self):
         processed_data = build_response_data(api_data, (0, 0))

@@ -19,7 +19,7 @@ data-grid: data table rendering
 nock: network mocking
 create-react-app: projct staffolding
 react-geolocated: easy geo location handling
-react-testing-library: way superior to Enzyme, IMHO!
+react-testing-library: far superior to Enzyme, IMHO
 
 ## Development / implementation notes
 
@@ -27,9 +27,14 @@ I favoured using existing frameworks, tools and dependencies, for speed of devel
 
 ### Back-end
 
+I haven't written Python for many years, which is probably clear from the project! So I may have chosen frameworks badly, or not written the most stylish code. Hey, at least I chose Python 3.
+
 Flask seemed a good choice to serve the back end.
 CORS and caching support is easily available.
-Doing all possible data processing and caching the endpoint means less strain on production API, and means a more consistent front-end performance.
+Doing all possible data processing and caching the endpoint means less strain on production API, and means a more consistent front-end performance, than doing data processing in the FE, where the device capabilities will vary to a large degree.
+
+The app runs in development or production mode, via a parameter. See running instructions below.
+In production mode, the live Aiven API is called. In development mode, a copy of the data is read. You probably don't want to hit production APIs in all test runs, and they might not be available in some test environments.
 
 ### Front-end
 
@@ -42,6 +47,13 @@ In this implementation, an error message is shown when the user denies the locat
 
 `CloudTable.test.tsx`: I have commented a line out, but wanted to mention it, as it shows a cool new feature of React Testing Library.
 `screen.logTestingPlaygroundURL()` will console log a URL with the component's markup serialised. This takes you to a Testing Playground page showing the component, which you can click around, and which gives you selectors for any of those elements, and another pane where you can type in selectors and see the outcome highlighted in your component. This saves a lot of trial and error in trying to find the right selectors for your tests.
+https://twitter.com/kentcdodds/status/1316044932327469056
+
+### Cypress testing
+
+I had trouble with the requirement for the browser to ask permission to access the geolocation. As a result, the tests sometimes fail for me. This is currently an open issue on Cypress' Github page:
+https://github.com/cypress-io/cypress/issues/2671
+However, I think end-to-end browser automation testing is very good to have in a project, and wanted to at least show you how I would approach this part of testing, and what it can offer that unit testing cannot.
 
 ## Incomplete parts
 
@@ -49,8 +61,38 @@ I was not able to write the data filtering in time. The data in the table should
 The approach I would have taken is to have a filter section to the left of the table, with a sub section for each type of filter, and a checkbox for each value to select. This link shows an example of this pattern.
 http://ui-patterns.com/patterns/TableFilter/examples/242
 In terms of the front-end components, CloudList loads the data from the back-end and passes it to CloudTable. I would write an additional component, CloudFilter, which would handle these checkboxes, and pass the matching data subset to CloudFilter, which would not need to change.
-The back-end would need to provide a list of the distinct values for these filters, this would be returned as an additional section in the JSON response, e.g. filterRanges.
+The back-end would need to provide a list of the distinct values for these filters, this would be returned as an additional section in the JSON response, e.g. filterRanges. These filter values should be calculated by the BE from the data, and dynamically rendered in the FE to reduce coupling.
+
+## Installation / running
+
+From the base directory
+
+Back end:
+`cd backend`
+`pipenv install` (first time only)
+`./test.sh`
+`./start.sh`: run in dev mode. serves hard-coded data.
+`./start.sh production`: run in prod mode. hits live API.
+
+Front end:
+`cd frontend`
+`yarn install`
+`yarn test`
+`yarn run`
+
+Cypress:
+Ensure both front and back ends are running first.
+`cd cypress`
+`yarn test`
+
+site is available at
+http://localhost:3000/
+
+back-end API is served at
+http://localhost:5000/cloudlist
+http://localhost:5000/status
 
 ## Attributions
 
 https://www.smashingmagazine.com/2020/06/rest-api-react-fetch-axios/
+

@@ -1,17 +1,5 @@
 from calculate_distances import calculate_distance
-
-awsProviderName = "Amazon Web Services"
-azureProviderName = "Azure"
-googleProviderName = "Google Cloud"
-providerNames = [awsProviderName, azureProviderName, googleProviderName]
-
-
-def parse_provider(description):
-    for provider in providerNames:
-        if description.find(provider) != -1:
-            return provider
-
-    return "Unknown"
+from provider_names import parse_provider
 
 
 def build_response_data(api_data, user_location):

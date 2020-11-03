@@ -78,7 +78,7 @@ Back end:
 
 Front end:
 `cd frontend`
-`yarn install`
+`yarn install` (first time only)
 `yarn test`
 `yarn run`
 

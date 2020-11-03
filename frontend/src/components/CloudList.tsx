@@ -11,10 +11,6 @@ export type Row = {
   provider: string;
 };
 
-export type APIResponse = {
-  clouds: Row[];
-};
-
 type CloudListProps = {
   coords?: GeolocatedProps['coords'];
 };

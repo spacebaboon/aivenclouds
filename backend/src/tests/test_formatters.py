@@ -1,5 +1,5 @@
 import unittest
-from dummy_data import api_data
+from tests. dummy_data import api_data
 from formatters import build_response_data, parse_provider
 
 

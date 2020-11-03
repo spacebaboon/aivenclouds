@@ -482,6 +482,13 @@ cross-spawn@^7.0.0:
     shebang-command "^2.0.0"
     which "^2.0.1"
 
+cypress-browser-permissions@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/cypress-browser-permissions/-/cypress-browser-permissions-1.0.5.tgz#650f99936cafd5b807344958f9bc184625f07593"
+  integrity sha512-oF6QfCRxWoGYUhhSjIhqN4pCFMmg9ZxEmbqJZVbf/nZoKAchFAzvSSwxbAAe9RgiqJ23f5pDymy8o5Mr/mDw8w==
+  dependencies:
+    lodash "^4.17.19"
+
 cypress@^5.5.0:
   version "5.5.0"
   resolved "https://registry.yarnpkg.com/cypress/-/cypress-5.5.0.tgz#1da0355794a43247f8a80cb7f505e83e1cf847cb"

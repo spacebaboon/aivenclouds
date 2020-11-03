@@ -15,7 +15,7 @@ export const Geolocation = (props: GeolocationProps) => {
       ) : props.coords ? (
         React.cloneElement(props.children, { coords: props.coords })
       ) : (
-        <div>Awaiting geolocation permission...</div>
+        <div>Loading...</div>
       )}
     </>
   );

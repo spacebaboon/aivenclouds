@@ -23,4 +23,13 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
-import '@testing-library/cypress/add-commands'
+
+import "@testing-library/cypress/add-commands";
+
+Cypress.Commands.add("mockGeolocation", (latitude = 30, longitude = -98) => {
+  cy.window().then(($window) => {
+    cy.stub($window.navigator.geolocation, "getCurrentPosition", (callback) => {
+      return callback({ coords: { latitude, longitude } });
+    });
+  });
+});

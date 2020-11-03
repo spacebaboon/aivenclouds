@@ -1,4 +1,8 @@
-import { APIResponse } from '../components/CloudList';
+import { Row } from '../components/CloudList';
+
+type APIResponse = {
+  clouds: Row[];
+};
 
 export const sampleApiResponse: APIResponse = {
   clouds: [

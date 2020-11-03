@@ -1,6 +1,6 @@
 import unittest
 import responses
-from dummy_data import api_data
+from tests.dummy_data import api_data
 from aiven_api import get_cloud_list
 
 

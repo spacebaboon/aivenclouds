@@ -21,7 +21,7 @@ describe('Geolocation', () => {
 
     screen.getByText(/Geolocation not enabled in browser/);
   });
-  
+
   it('shows message when waiting for user geolocation permission', () => {
     render(
       <Geolocation
@@ -33,7 +33,7 @@ describe('Geolocation', () => {
       </Geolocation>
     );
 
-    screen.getByText(/Awaiting geolocation permission.../);
+    screen.getByText(/Loading.../);
   });
 
   it('renders child component with coords as added prop', () => {

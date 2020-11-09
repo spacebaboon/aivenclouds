@@ -1,14 +1,17 @@
 import { ColDef, DataGrid, RowsProp } from '@material-ui/data-grid';
 import React from 'react';
 
-type TableProps = {
-  data: RowsProp;
-
+export type TableProps = {
+  data?: RowsProp;
   isLoading: boolean;
   error?: boolean;
 };
 
-export const CloudTable = ({ data, isLoading, error = false }: TableProps) => {
+export const CloudTable = ({
+  data = [],
+  isLoading,
+  error = false,
+}: TableProps) => {
   const columns: ColDef[] = [
     {
       field: 'description',

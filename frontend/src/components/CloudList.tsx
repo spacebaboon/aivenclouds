@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { GeolocatedProps } from 'react-geolocated';
 import { CloudTable } from './CloudTable';
+import { Filters, FilterType } from './Filters';
 
 export type Row = {
   id: string;
@@ -11,12 +12,20 @@ export type Row = {
   provider: string;
 };
 
+export type APIData = {
+  filterRanges: FilterType[];
+  clouds: Row[];
+};
+
 type CloudListProps = {
   coords?: GeolocatedProps['coords'];
 };
 
 export const CloudList = (props: CloudListProps) => {
-  const [data, setData] = useState<Row[]>([]);
+  const [data, setData] = useState<APIData>({
+    filterRanges: [],
+    clouds: [],
+  });
   const [error, setError] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -31,7 +40,7 @@ export const CloudList = (props: CloudListProps) => {
       .get(apiUrl)
       .then((response) => {
         setLoading(false);
-        setData(response.data.clouds);
+        setData(response.data);
       })
       .catch((error) => {
         setLoading(false);
@@ -39,5 +48,9 @@ export const CloudList = (props: CloudListProps) => {
       });
   }, [setLoading, setError, setData, apiUrl]);
 
-  return <CloudTable data={data} isLoading={loading} error={error} />;
+  return (
+    <Filters data={data?.clouds} filterRanges={data?.filterRanges}>
+      <CloudTable isLoading={loading} error={error} />
+    </Filters>
+  );
 };

@@ -2,7 +2,7 @@ import React from 'react';
 import { geolocated, GeolocatedProps } from 'react-geolocated';
 
 type GeolocationProps = {
-  children: React.ReactElement;
+  children?: React.ReactElement;
 } & GeolocatedProps;
 
 export const Geolocation = (props: GeolocationProps) => {
@@ -13,7 +13,7 @@ export const Geolocation = (props: GeolocationProps) => {
       ) : !props.isGeolocationEnabled ? (
         <div>Geolocation not enabled in browser</div>
       ) : props.coords ? (
-        React.cloneElement(props.children, { coords: props.coords })
+        props.children && React.cloneElement(props.children, { coords: props.coords })
       ) : (
         <div>Loading...</div>
       )}

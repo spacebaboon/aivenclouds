@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import React from 'react';
 import { TableProps } from './CloudTable';
 import { Filters, FiltersPropsType } from './Filters';
@@ -22,10 +22,15 @@ describe('Filters', () => {
   const filtersProps: FiltersPropsType = {
     filterRanges: [
       {
+        fieldName: 'provider',
         displayName: 'Provider',
-        values: ['Amazon Web Services', 'Google Cloud', 'Microsoft Azure'],
+        values: ['Amazon Web Services', 'Google Cloud', 'Azure'],
       },
-      { displayName: 'Region', values: ['Europe', 'Southeast Asia'] },
+      {
+        fieldName: 'region',
+        displayName: 'Region',
+        values: ['Europe', 'Southeast Asia'],
+      },
     ],
     data: [
       {
@@ -39,7 +44,7 @@ describe('Filters', () => {
         id: 'row2',
         description: 'Azure Bangkok',
         region: 'Southeast Asia',
-        provider: 'Microsoft Azure',
+        provider: 'Azure',
         distance: 10000,
       },
     ],
@@ -79,7 +84,7 @@ describe('Filters', () => {
     render(<Filters {...filtersProps} />);
     screen.getByRole('checkbox', { name: 'Amazon Web Services' });
     screen.getByRole('checkbox', { name: 'Google Cloud' });
-    screen.getByRole('checkbox', { name: 'Microsoft Azure' });
+    screen.getByRole('checkbox', { name: 'Azure' });
 
     screen.getByRole('checkbox', { name: 'Europe' });
     screen.getByRole('checkbox', { name: 'Southeast Asia' });
@@ -87,14 +92,17 @@ describe('Filters', () => {
     // screen.logTestingPlaygroundURL();
   });
 
-  it('filters the region data when one region checkbox clicked', () => {
+  it('filters the region data when one region checkbox selected', async () => {
     render(
       <Filters {...filtersProps}>
         <MockChild {...tableProps} />
       </Filters>
     );
-    screen.getByRole('checkbox', { name: 'Microsoft Azure' }).click();
-    screen.getByText(/Azure Bangkok/);
-    expect(screen.getByText(/AWS Wales/)).not.toBeInTheDocument();
+    screen.getByRole('checkbox', { name: 'Azure' }).click();
+
+    await waitFor(() => {
+      screen.getByText(/Row \d: Azure Bangkok/);
+    });
+    expect(screen.queryByText(/Row \d: AWS Wales/)).not.toBeInTheDocument();
   });
 });
